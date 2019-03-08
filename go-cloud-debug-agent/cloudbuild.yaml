@@ -1,0 +1,25 @@
+steps:
+  - name: gcr.io/cloud-builders/docker:18.09.0
+    args:
+      - image
+      - build
+      - --pull
+      - --build-arg
+      - GOLANG_VERSION=1.12
+      - --build-arg
+      - ALPINE_VERSION=3.9
+      - -t
+      - gcr.io/$PROJECT_ID/cloud-builders/go-cloud-debug-agent:$_TAG
+      - .
+  - name: gcr.io/cloud-builders/docker:18.09.0
+    args:
+      - image
+      - tag
+      - gcr.io/$PROJECT_ID/cloud-builders/go-cloud-debug-agent:$_TAG
+      - gcr.io/$PROJECT_ID/cloud-builders/go-cloud-debug-agent:latest
+
+images:
+  - gcr.io/$PROJECT_ID/cloud-builders/go-cloud-debug-agent:$_TAG
+  - gcr.io/$PROJECT_ID/cloud-builders/go-cloud-debug-agent:latest
+
+timeout: 600s
