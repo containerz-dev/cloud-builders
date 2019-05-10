@@ -1,0 +1,20 @@
+steps:
+  - name: gcr.io/cloud-builders/docker:18.09.0
+    args:
+      - image
+      - build
+      - --pull
+      - --build-arg
+      - GOLANG_VERSION=1.12
+      - --build-arg
+      - ALPINE_VERSION=3.9
+      - --target
+      - dep
+      - -t
+      - gcr.io/$PROJECT_ID/cloud-builders/dep:latest
+      - .
+
+images:
+  - gcr.io/$PROJECT_ID/cloud-builders/dep:latest
+
+timeout: 600s
