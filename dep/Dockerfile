@@ -9,7 +9,7 @@ RUN set -eux && \
 		git
 RUN set -eux && \
 	mkdir -p "${OUTDIR}/usr/bin" && \
-	GOBIN=${OUTDIR}/usr/bin/ go get -a -u -v -tags 'osusergo netgo static static_build' -installsuffix 'netgo' -ldflags='-d -s -w -extldflags=-static' \
+	DEPNOLOCK=1 IMPORT_DURING_SOLVE='true' GOBIN=${OUTDIR}/usr/bin/ go get -a -u -v -tags 'osusergo netgo static static_build' -installsuffix 'netgo' -ldflags='-d -s -w -extldflags=-static' \
 		github.com/golang/dep/cmd/dep
 
 # dep
