@@ -12,6 +12,8 @@ RUN set -eux && \
 	DEPNOLOCK=1 IMPORT_DURING_SOLVE='true' GOBIN=${OUTDIR}/usr/bin/ go get -a -u -v -tags 'osusergo netgo static static_build' -installsuffix 'netgo' -ldflags='-d -s -w -extldflags=-static' \
 		github.com/golang/dep/cmd/dep
 
+FROM gcr.io/distroless/static:nonroot AS nonroot
+
 # dep
 ARG GOLANG_VERSION
 ARG ALPINE_VERSION
@@ -25,4 +27,7 @@ RUN set -eux && \
 		git \
 		mercurial \
 		subversion
+COPY --from=nonroot /etc/passwd /etc/passwd
+COPY --from=nonroot /etc/group /etc/group
+USER nonroot:nonroot
 ENTRYPOINT ["/usr/bin/dep"]
