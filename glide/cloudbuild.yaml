@@ -1,13 +1,13 @@
 steps:
-  - name: gcr.io/cloud-builders/docker:18.09.6
+  - name: docker.io/docker:19.03.8
     args:
       - image
       - build
       - --pull
       - --build-arg
-      - GOLANG_VERSION=1.12
+      - GOLANG_VERSION=1.14
       - --build-arg
-      - ALPINE_VERSION=3.9
+      - ALPINE_VERSION=3.11
       - --target
       - glide
       - -t
